@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 
+import PROFILE from './data/profile.json';
+import PROJECTS from './data/projects.json';
+
 /* ------------------------------------------------------------------ */
 /* Design tokens & global styles                                       */
 /* ------------------------------------------------------------------ */
@@ -75,67 +78,6 @@ a:hover .pf-arrow, button:hover .pf-arrow { transform: translate(2px, -2px); }
   }
 }
 `;
-
-/* ------------------------------------------------------------------ */
-/* Profile & Projects Data                                            */
-/* Ubah data langsung di sini saat ingin memperbarui isi portofolio     */
-/* ------------------------------------------------------------------ */
-
-const PROFILE = {
-  name: 'Bastian Nevan',
-  title: 'Informatics Engineer Student',
-  location: 'Malang, Indonesia',
-  email: 'bassstian06@gmail.com',
-  githubUsername: 'Basnt-Code',
-  linkedinPath: 'www.linkedin.com/in/bastian-nevan',
-  introTagline:
-    "Hi, I'm Bastian Nevan. Currently lost in sea of tech and still studying.",
-  about:
-    'Im a student of Informatics Engineering at Universitas Brawijaya, Malang. I have a strong interest in software development, particularly in building scalable and efficient systems. I enjoy exploring new technologies and applying them to solve real-world problems. In my free time, I like to contribute to open-source projects and collaborate with other developers.',
-};
-
-const PROJECTS = [
-  {
-    id: 'meridian',
-    title: 'Meridian',
-    summary:
-      'A schema-first event gateway that turns Kafka topics into typed, self-documenting APIs for product teams.',
-    year: '2025',
-    role: 'Lead Engineer',
-    techTags: ['GO', 'KAFKA', 'GRPC'],
-    repoName: 'meridian',
-    liveUrl: 'https://meridian.arya.dev',
-    isFeatured: true,
-  },
-  {
-    id: 'lantern',
-    title: 'Lantern',
-    summary:
-      'Observability layer that correlates traces, logs, and deploy markers into a single readable timeline.',
-    year: '2024',
-    role: 'Creator',
-    techTags: ['TYPESCRIPT', 'OPENTELEMETRY', 'CLICKHOUSE'],
-    repoName: 'lantern',
-    liveUrl: 'https://lantern.arya.dev',
-    isFeatured: true,
-  },
-  {
-    id: 'quill-cli',
-    title: 'Quill CLI',
-    summary:
-      'A developer CLI for scaffolding services with sensible defaults, linting, and one-command deploys.',
-    year: '2023',
-    role: '',
-    techTags: ['RUST', 'CLI', 'UX'],
-    repoName: 'quill-cli',
-    liveUrl: '',
-    isFeatured: false,
-  },
-];
-
-/* ------------------------------------------------------------------ */
-/* Components                                                         */
-/* ------------------------------------------------------------------ */
 
 function Header({ onNavWork }) {
   return (

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "meridian",
+    "title": "Meridian",
+    "summary": "A schema-first event gateway that turns Kafka topics into typed, self-documenting APIs for product teams.",
+    "year": "2025",
+    "role": "Lead Engineer",
+    "techTags": ["GO", "KAFKA", "GRPC"],
+    "repoName": "meridian",
+    "liveUrl": "https://meridian.arya.dev",
+    "isFeatured": true
+  },
+  {
+    "id": "lantern",
+    "title": "Lantern",
+    "summary": "Observability layer that correlates traces, logs, and deploy markers into a single readable timeline.",
+    "year": "2024",
+    "role": "Creator",
+    "techTags": ["TYPESCRIPT", "OPENTELEMETRY", "CLICKHOUSE"],
+    "repoName": "lantern",
+    "liveUrl": "https://lantern.arya.dev",
+    "isFeatured": true
+  },
+  {
+    "id": "quill-cli",
+    "title": "Quill CLI",
+    "summary": "A developer CLI for scaffolding services with sensible defaults, linting, and one-command deploys.",
+    "year": "2023",
+    "role": "",
+    "techTags": ["RUST", "CLI", "UX"],
+    "repoName": "quill-cli",
+    "liveUrl": "",
+    "isFeatured": false
+  },
+  {
+    "id": "test project",
+    "title": "Test Project",
+    "summary": "A simple test project for demonstration purposes.",
+    "year": "2023",
+    "role": "Developer",
+    "techTags": ["REACT", "NODEJS", "MONGODB"],
+    "repoName": "test-project",
+    "liveUrl": "",
+    "isFeatured": false
+  }
+]
