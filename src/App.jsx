@@ -87,9 +87,9 @@ const PROFILE = {
   location: 'Malang, Indonesia',
   email: 'bassstian06@gmail.com',
   githubUsername: 'Basnt-Code',
-  linkedinPath: 'in/bastian-nevan',
+  linkedinPath: 'www.linkedin.com/in/bastian-nevan',
   introTagline:
-    "I design resilient systems and quiet interfaces — the kind of infrastructure that stays out of the way while carrying real weight.",
+    "Hi, I'm Bastian Nevan. Currently lost in sea of tech and still studying.",
   about:
     'Im a student of Informatics Engineering at Universitas Brawijaya, Malang. I have a strong interest in software development, particularly in building scalable and efficient systems. I enjoy exploring new technologies and applying them to solve real-world problems. In my free time, I like to contribute to open-source projects and collaborate with other developers.',
 };
@@ -175,6 +175,15 @@ function Hero({ profile }) {
           className="pf-underline pf-text-muted inline-flex items-center gap-1"
         >
           Github <ArrowUpRight size={11} className="pf-arrow" />
+        </a>
+        <span>/</span>
+        <a
+          href={`https://linkedin.com/${profile.linkedinPath}`}
+          target="_blank"
+          rel="noreferrer"
+          className="pf-underline pf-text-muted inline-flex items-center gap-1"
+        >
+          LinkedIn <ArrowUpRight size={11} className="pf-arrow" />
         </a>
       </div>
     </section>
@@ -369,28 +378,61 @@ export default function App() {
 
   useEffect(() => {
     let cancelled = false;
+    const CACHE_KEY = 'gh_stats_data';
+    const CACHE_TIME_KEY = 'gh_stats_timestamp';
+    const ONE_HOUR = 60 * 60 * 1000; // Interval refresh: 1 jam (dalam milidetik)
+
+    // 1. Cek ketersediaan data cache di browser
+    const cachedData = localStorage.getItem(CACHE_KEY);
+    const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
+    const isFresh = cachedTime && Date.now() - Number(cachedTime) < ONE_HOUR;
+
+    // Jika data masih dalam rentang 1 jam, gunakan cache tanpa memanggil API
+    if (cachedData && isFresh) {
+      setGithubStats(JSON.parse(cachedData));
+      return;
+    }
+
     if (!PROFILE.githubUsername) {
       setGithubStats(null);
       return;
     }
-    setGithubStatsLoading(true);
+
+    // Tampilkan indikator loading hanya jika belum ada cache sama sekali
+    if (!cachedData) setGithubStatsLoading(true);
     setGithubStatsError(false);
+
     fetch(`https://api.github.com/users/${encodeURIComponent(PROFILE.githubUsername)}`)
       .then((res) => {
-        if (!res.ok) throw new Error('not ok');
+        if (!res.ok) throw new Error('API limit reached or user not found');
         return res.json();
       })
       .then((data) => {
         if (cancelled) return;
-        setGithubStats({ repos: data.public_repos, followers: data.followers, avatarUrl: data.avatar_url });
+        const stats = {
+          repos: data.public_repos,
+          followers: data.followers,
+          avatarUrl: data.avatar_url,
+        };
+        setGithubStats(stats);
         setGithubStatsLoading(false);
+
+        // Simpan hasil panggilan terbaru beserta penanda waktu
+        localStorage.setItem(CACHE_KEY, JSON.stringify(stats));
+        localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
       })
       .catch(() => {
         if (cancelled) return;
-        setGithubStats(null);
-        setGithubStatsError(true);
+        // Jika limit tercapai tetapi ada cache lama, tetap tampilkan data lama
+        if (cachedData) {
+          setGithubStats(JSON.parse(cachedData));
+        } else {
+          setGithubStats(null);
+          setGithubStatsError(true);
+        }
         setGithubStatsLoading(false);
       });
+
     return () => {
       cancelled = true;
     };
